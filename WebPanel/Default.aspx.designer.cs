@@ -7,7 +7,7 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace CrystalQuartz.Web.Demo {
+namespace WebManager {
     
     
     public partial class _Default {

@@ -1098,7 +1098,7 @@ var JobGroupView = (function (_super) {
 /// <reference path="../Views/JobGroupView.ts"/>
 var CommandProgressView = (function () {
     function CommandProgressView() {
-        this.template = '<section class="cq-busy">' + '<div class="cq-busy-image">' + '<img src="CrystalQuartzPanel.axd?path=Images.loading.gif"/>' + '</div>' + '<div id="currentCommand" class="cq-current-command"></div>' + '</section>';
+        
     }
     CommandProgressView.prototype.init = function (dom, viewModel) {
         dom('#currentCommand').observes(viewModel.currentCommand);

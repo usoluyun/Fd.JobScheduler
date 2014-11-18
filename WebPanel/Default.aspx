@@ -1,13 +1,13 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="CrystalQuartz.Web.Demo._Default" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="WebManager._Default" %>
 
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>CrystalQuartz Panel</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link href='Content/Styles/bootstrap.css' rel='stylesheet' type='text/css' />
-    <link href='Content/Styles/main.css' rel='stylesheet' type='text/css' />
-    <link href='Content/Fonts/flaticon.css' rel='stylesheet' type='text/css' />
+    <link href='Styles/bootstrap.css' rel='stylesheet' type='text/css' />
+    <link href='Styles/main.css' rel='stylesheet' type='text/css' />
+    <link href='Styles/Fonts/flaticon.css' rel='stylesheet' type='text/css' />
 </head>
 <body>
     <form>
@@ -21,10 +21,10 @@
                             <h1 id="schedulerName" class="cq-scheduler-name"></h1>
                         </div>
 
-                        <div id="commandIndicator" class="col-xs-3 col-md-2 cq-header-item"><section class="cq-busy" style="display: none;"><div class="cq-busy-image"><img src="CrystalQuartzPanel.axd?path=Images.loading.gif"></div><div id="currentCommand" class="cq-current-command">Loading scheduler data</div></section></div>
+                        <div id="commandIndicator" class="col-xs-3 col-md-2 cq-header-item"><section class="cq-busy" style="display: none;"><div class="cq-busy-image"><img src="/Images/loading.gif"></div><div id="currentCommand" class="cq-current-command">Loading scheduler data</div></section></div>
 
                         <div class="col-xs-3 col-md-5 cq-header-item visible-md-block visible-lg-block">
-                            <a class="cq-leave-link" href="/">return to the main site</a>
+                          <%--  <a class="cq-leave-link" href="/">return to the main site</a>--%>
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                                 <tbody>
                                     <tr>
                                         <th>Running since:</th>
-                                        <td class="runningSince"></td>
+                                        <td class="runningSince"><%=sd.Data.RunningSince %></td>
                                     </tr>
                                     <tr>
                                         <th>Total Jobs:</th>
@@ -64,7 +64,7 @@
                                     </tr>
                                     <tr>
                                         <th>Executed Jobs:</th>
-                                        <td class="executedJobs"></td>
+                                        <td class="executedJobs"><%=sd.Data.JobsExecuted %></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -79,19 +79,19 @@
                                 <tbody>
                                     <tr>
                                         <th>Name:</th>
-                                        <td class="schedulerName"></td>
+                                        <td class="schedulerName"><%=sd.Data.SchedulerName %></td>
                                     </tr>
                                     <tr>
                                         <th>Instance ID:</th>
-                                        <td class="instanceId"></td>
+                                        <td class="instanceId"><%=sd.Data.InstanceId %></td>
                                     </tr>
                                     <tr>
                                         <th>Is remote:</th>
-                                        <td class="isRemote"></td>
+                                        <td class="isRemote"><%=sd.Data.IsRemote %></td>
                                     </tr>
                                     <tr>
                                         <th>Scheduler type:</th>
-                                        <td class="schedulerType"></td>
+                                        <td class="schedulerType"><%=sd.Data.SchedulerType %></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -271,7 +271,7 @@
         </div>
 
         <footer id="mainFooter" class="cq-main-footer">
-            <div class="cq-footer-wrapper">
+         <%--<div class="cq-footer-wrapper">
                 <div class="container">
                     <div class="pull-left">
                         <div class="cq-version-container">CrystalQuartz Panel <span id="selfVersion" class="cq-version">v1.0.0.0</span> </div>
@@ -283,7 +283,7 @@
                         <span id="autoUpdateMessage" class="">next update at 18:00:01 GMT+0800 (中国标准时间)</span>
                     </div>
                 </div>
-            </div>
+            </div>--%>
         </footer>
     </div>
 
