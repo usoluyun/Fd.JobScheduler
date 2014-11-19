@@ -1,3 +1,4 @@
+using HubRoute.Domain;
 using System;
 using System.Collections.Generic;
 
@@ -34,6 +35,10 @@ namespace HubRoute
                 return Status != SchedulerStatus.Shutdown;
             }
         }
+
+        public IList<JobGroupData> JobGroups { get; set; }
+
+        public IList<TriggerGroupData> TriggerGroups { get; set; }
 
         public SchedulerStatus Status { get; set; }
 

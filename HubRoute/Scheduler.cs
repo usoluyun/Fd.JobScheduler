@@ -7,11 +7,14 @@ using Quartz;
 using Quartz.Impl;
 using Quartz.Impl.Matchers;
 using HubRoute.Utils;
+using HubRoute.Domain;
 namespace HubRoute
 {
     public class Scheduler
     {
-        public readonly IScheduler Instance;
+        public static Scheduler CurrentInstance;
+
+        public  readonly IScheduler Instance;
         public string Address { get; private set; }
 
         private readonly ISchedulerFactory _schedulerFactory;
@@ -32,8 +35,8 @@ namespace HubRoute
             {
                 Instance = _schedulerFactory.GetScheduler();
 
-                if (!Instance.IsStarted)
-                    Instance.Start();
+                //if (!Instance.IsStarted)
+                //    Instance.Start();
             }
             catch (SchedulerException ex)
             {
@@ -66,6 +69,8 @@ namespace HubRoute
                 IsRemote = metaData.SchedulerRemote,
                 JobsExecuted = metaData.NumberOfJobsExecuted,
                 SchedulerType = metaData.SchedulerType,
+                JobGroups = GetJobGroups(Instance),
+                TriggerGroups = GetTriggerGroups(Instance),
                 Version = metaData.Version,
                 JobStoreTypeName = metaData.JobStoreType.Name,
                 IsPersistence = metaData.JobStoreSupportsPersistence,
@@ -114,79 +119,100 @@ namespace HubRoute
         }
 
 
-         //private static IList<TriggerGroupData> GetTriggerGroups(IScheduler scheduler)
-         //{
-         //    var result = new List<TriggerGroupData>();
-         //    if (!scheduler.IsShutdown)
-         //    {
-         //        foreach (var groupName in scheduler.GetTriggerGroupNames())
-         //        {
-         //            var data = new TriggerGroupData(groupName);
-         //            data.Init();
-         //            result.Add(data);
-         //        }
-         //    }
+         private static IList<TriggerGroupData> GetTriggerGroups(IScheduler scheduler)
+         {
+             var result = new List<TriggerGroupData>();
+             if (!scheduler.IsShutdown)
+             {
+                 foreach (var groupName in scheduler.GetTriggerGroupNames())
+                 {
+                     var data = new TriggerGroupData(groupName);
+                     data.Init();
+                     result.Add(data);
+                 }
+             }
 
-         //    return result;
-         //}
+             return result;
+         }
 
-         //private static IList<JobGroupData> GetJobGroups(IScheduler scheduler)
-         //{
-         //    var result = new List<JobGroupData>();
+         private static IList<JobGroupData> GetJobGroups(IScheduler scheduler)
+         {
+             var result = new List<JobGroupData>();
 
-         //    if (!scheduler.IsShutdown)
-         //    {
-         //        foreach (var groupName in scheduler.GetJobGroupNames())
-         //        {
-         //            var groupData = new JobGroupData(
-         //                groupName,
-         //                GetJobs(scheduler, groupName));
-         //            groupData.Init();
-         //            result.Add(groupData);
-         //        }
-         //    }
+             if (!scheduler.IsShutdown)
+             {
+                 foreach (var groupName in scheduler.GetJobGroupNames())
+                 {
+                     var groupData = new JobGroupData(
+                         groupName,
+                         GetJobs(scheduler, groupName));
+                     groupData.Init();
+                     result.Add(groupData);
+                 }
+             }
 
-         //    return result;
-         //}
+             return result;
+         }
 
-         //private static IList<JobData> GetJobs(IScheduler scheduler, string groupName)
-         //{
-         //    var result = new List<JobData>();
+         private static IList<JobData> GetJobs(IScheduler scheduler, string groupName)
+         {
+             var result = new List<JobData>();
 
-         //    foreach (var jobKey in scheduler.GetJobKeys(GroupMatcher<JobKey>.GroupEquals(groupName)))
-         //    {
-         //        result.Add(GetJobData(scheduler, jobKey.Name, groupName));
-         //    }
+             foreach (var jobKey in scheduler.GetJobKeys(GroupMatcher<JobKey>.GroupEquals(groupName)))
+             {
+                 result.Add(GetJobData(scheduler, jobKey.Name, groupName));
+             }
 
-         //    return result;
-         //}
+             return result;
+         }
 
-         //private static JobData GetJobData(IScheduler scheduler, string jobName, string group)
-         //{
-         //    var jobData = new JobData(jobName, group, GetTriggers(scheduler, jobName, group));
-         //    jobData.Init();
-         //    return jobData;
-         //}
+         private static JobData GetJobData(IScheduler scheduler, string jobName, string group)
+         {
+             var jobData = new JobData(jobName, group, GetTriggers(scheduler, jobName, group));
+             jobData.Init();
+             return jobData;
+         }
 
-         //private static IList<TriggerData> GetTriggers(IScheduler scheduler, string jobName, string group)
-         //{
-         //    return scheduler
-         //        .GetTriggersOfJob(new JobKey(jobName, @group))
-         //        .Select(trigger => GetTriggerData(scheduler, trigger))
-         //        .ToList();
-         //}
+         private static IList<TriggerData> GetTriggers(IScheduler scheduler, string jobName, string group)
+         {
+             return scheduler
+                 .GetTriggersOfJob(new JobKey(jobName, @group))
+                 .Select(trigger => GetTriggerData(scheduler, trigger))
+                 .ToList();
+         }
 
-         ////获取详细时间
-         //private static TriggerData GetTriggerData(IScheduler scheduler, ITrigger trigger)
-         //{
-         //    return new TriggerData(trigger.Key.Name, GetTriggerStatus(trigger, scheduler))
-         //    {
-         //        GroupName = trigger.Key.Group,
-         //        StartDate = trigger.StartTimeUtc.DateTime,
-         //        EndDate = trigger.EndTimeUtc.ToDateTime(),
-         //        NextFireDate = trigger.GetNextFireTimeUtc().ToDateTime(),
-         //        PreviousFireDate = trigger.GetPreviousFireTimeUtc().ToDateTime(),
-         //    };
-         //}
+
+         private readonly static TriggerTypeExtractor TriggerTypeExtractor = new TriggerTypeExtractor();
+         //获取详细时间
+         private static TriggerData GetTriggerData(IScheduler scheduler, ITrigger trigger)
+         {
+             return new TriggerData(trigger.Key.Name, GetTriggerStatus(trigger, scheduler))
+             {
+                 GroupName = trigger.Key.Group,
+                 StartDate = trigger.StartTimeUtc.DateTime,
+                 EndDate = trigger.EndTimeUtc.ToDateTime(),
+                 NextFireDate = trigger.GetNextFireTimeUtc().ToDateTime(),
+                 PreviousFireDate = trigger.GetPreviousFireTimeUtc().ToDateTime(),
+                 TriggerType = TriggerTypeExtractor.GetFor(trigger)
+             };
+         }
+         private static ActivityStatus GetTriggerStatus(ITrigger trigger, IScheduler scheduler)
+         {
+             return GetTriggerStatus(trigger.Key.Name, trigger.Key.Group, scheduler);
+         }
+         private static ActivityStatus GetTriggerStatus(string triggerName, string triggerGroup, IScheduler scheduler)
+         {
+             var state = scheduler.GetTriggerState(new TriggerKey(triggerName, triggerGroup));
+             switch (state)
+             {
+                 case TriggerState.Paused:
+                     return ActivityStatus.Paused;
+                 case TriggerState.Complete:
+                     return ActivityStatus.Complete;
+                 default:
+                     return ActivityStatus.Active;
+             }
+         }
+
     }
 }
