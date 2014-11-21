@@ -59,6 +59,7 @@
     <Compile Include="Domain\TriggerTypes\CronTriggerType.cs" />
     <Compile Include="Domain\TriggerTypes\SimpleTriggerType.cs" />
     <Compile Include="Domain\TriggerTypes\TriggerType.cs" />
+    <Compile Include="JobCommand.cs" />
     <Compile Include="Scheduler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchedulerData.cs" />
