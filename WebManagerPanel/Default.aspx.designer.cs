@@ -7,9 +7,9 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace WebManager {
+namespace WebManagerPanel {
     
     
-    public partial class _Default {
+    public partial class Default {
     }
 }

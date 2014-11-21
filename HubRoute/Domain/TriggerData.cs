@@ -20,6 +20,6 @@ namespace HubRoute.Domain
 
         public DateTime? PreviousFireDate { get; set; }
 
-        public TriggerType TriggerType { get; set; }
+        public CronTriggerType TriggerType { get; set; }
     }
 }

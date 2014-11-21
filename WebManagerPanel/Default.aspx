@@ -1,9 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="WebManager._Default" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="WebManagerPanel.Default" %>
 
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>CrystalQuartz Panel</title>
+    <title>JobScheduler Panel</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href='Styles/bootstrap.css' rel='stylesheet' type='text/css' />
     <link href='Styles/main.css' rel='stylesheet' type='text/css' />
@@ -45,7 +45,7 @@
                                 <a id="startSchedulerButton" class="cq-button disabled" href="#">
                                     <span class="cq-icon flaticon-play"></span>Start scheduler
                                 </a>
-                                <a id="stopSchedulerButton" class="cq-button disabled" href="#">
+                                <a id="stopSchedulerButton" class="cq-button" href="#">
                                     <span class="cq-icon flaticon-power"></span>Shutdown
                                 </a>
                                 <a id="refreshData" class="cq-button" href="#">
@@ -66,7 +66,7 @@
                                         </tr>
                                         <tr>
                                             <th>Total Jobs:</th>
-                                            <td class="totalJobs"></td>
+                                            <td class="totalJobs"><%=SchedulerInfo.Data.JobsTotal %></td>
                                         </tr>
                                         <tr>
                                             <th>Executed Jobs:</th>
@@ -143,40 +143,41 @@
 
                             <section class="detailsContainer"></section>
 
-                            <%foreach (var trigger in item1.Triggers)
-                              {%>
-
                             <table class="cq-triggers triggers">
                                 <thead>
                                     <tr>
                                         <th>Trigger</th>
                                         <th>Schedule</th>
                                         <th>Start date</th>
-                                        <th>End date</th>
                                         <th>Previous fire date</th>
                                         <th>Next fire date</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <%foreach (var trigger in item1.Triggers)
+                                      {%>
+
+
+
                                     <tr>
                                         <td>
 
                                             <span class="status">
                                                 <span class="cq-activity-status active" title="Status: Active">
-                                                    <%if (trigger.Status == HubRoute.Domain.ActivityStatus.Active){ %>
+                                                    <%if (trigger.Status == HubRoute.Domain.ActivityStatus.Active)
+                                                      { %>
                                                     <span class="cq-activity-status-primary"></span>
-                                                    
+
                                                     <%} %>
                                                 </span>
                                             </span>
                                             <span class="name"><%=trigger.Name %></span>
                                         </td>
-                                        <td class="type"><%=trigger.TriggerType %></td>
-                                        <td class="startDate"><span class="cq-date">2014/11/14 17:27:15</span></td>
-                                        <td class="endDate"><span class="cq-date"><span class="cq-none">[none]</span></span></td>
-                                        <td class="previousFireDate"><span class="cq-date">2014/11/17 20:45:01</span></td>
-                                        <td class="nextFireDate"><span class="cq-date">2014/11/18 18:00:01</span></td>
+                                        <td class="type"><%=trigger.TriggerType.CronExpression %></td>
+                                        <td class="startDate"><span class="cq-date"><%=trigger.StartDate %></span></td>
+                                        <td class="previousFireDate"><span class="cq-date"><%=trigger.PreviousFireDate %></span></td>
+                                        <td class="nextFireDate"><span class="cq-date"><%=trigger.NextFireDate %></span></td>
                                         <td class="">
                                             <section class="actions">
                                                 <a href="#" class="pause cq-button flaticon-pause"></a>
@@ -184,9 +185,10 @@
                                             </section>
                                         </td>
                                     </tr>
+
+                                    <%} %>
                                 </tbody>
                             </table>
-                            <%} %>
                         </article>
 
 
@@ -216,7 +218,5 @@
 
     </form>
     <script src="Scripts/jquery-1.11.1.min.js"></script>
-    <script src="Scripts/john-smith-3.2.0.js"></script>
-    <script src="Scripts/lodash.compat.min.js"></script>
 </body>
 </html>

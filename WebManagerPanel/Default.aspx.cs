@@ -5,10 +5,10 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Quartz;
-namespace WebManager
+
+namespace WebManagerPanel
 {
-    public partial class _Default : System.Web.UI.Page
+    public partial class Default : System.Web.UI.Page
     {
         public Scheduler SchedulerInfo { get; private set; }
         protected void Page_Load(object sender, EventArgs e)
