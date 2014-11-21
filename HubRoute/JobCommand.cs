@@ -14,7 +14,7 @@ namespace HubRoute
     {
         private static Lazy<JobCommand> current { get; set; }
 
-        public static JobCommand()
+        static JobCommand()
         {
             current = new Lazy<JobCommand>(System.Threading.LazyThreadSafetyMode.ExecutionAndPublication);
         }
