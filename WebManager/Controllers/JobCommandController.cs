@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using HubRoute;
+using System.Web;
+
 namespace WebManager.Controllers
 {
     public class JobCommandController : ApiController
@@ -16,25 +18,14 @@ namespace WebManager.Controllers
         }
 
         // GET api/jobcommand/5
-        public string PauseTrigger(string name, string group)
+
+        public string PauseTrigger()
         {
+            string name =HttpContext.Current.Request["name"];
+            string group = HttpContext.Current.Request["group"];
             JobCommand.Current.PauseTrigger(name, group);
             return "success";
         }
 
-        // POST api/jobcommand
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/jobcommand/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/jobcommand/5
-        public void Delete(int id)
-        {
-        }
     }
 }

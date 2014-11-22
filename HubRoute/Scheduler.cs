@@ -97,27 +97,7 @@ namespace HubRoute
             }
             return SchedulerStatus.Ready;
         }
-         public bool UnscheduleJob(string jobName, string jobGroup)
-        {
-            var jobKey = new JobKey(jobName, jobGroup);
-
-            if (Instance.CheckExists(jobKey))
-            {
-                return Instance.UnscheduleJob(new TriggerKey(jobName, jobGroup));
-            }
-            return false;
-        }
-
-
-         public void RescheduleJob(string jobName, string jobGroup, string cronExpression)
-        {
-            var trigger = (ICronTrigger)TriggerBuilder.Create()
-                .WithIdentity(jobName, jobGroup)
-                .WithCronSchedule(cronExpression)
-                .Build();
-            Instance.RescheduleJob(new TriggerKey(jobName, jobGroup), trigger);
-        }
-
+      
 
          private static IList<TriggerGroupData> GetTriggerGroups(IScheduler scheduler)
          {
