@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using Quartz.Impl.Matchers;
 using Common.Jobs;
+using System.Web.Script.Serialization;
+
 
 namespace HubRoute
 {
@@ -49,11 +51,6 @@ namespace HubRoute
         {
             Instance.PauseJob(new JobKey(name, group));
         }
-        public void PauseJobs(string group)
-        {
-            Instance.PauseJobs(GroupMatcher<JobKey>.GroupEquals(group));
-        }
-
         public void ResumeJob(string name, string group)
         {
             Instance.ResumeJob(new JobKey(name, group));
@@ -62,6 +59,10 @@ namespace HubRoute
         public void ResumeJobs(string group)
         {
             Instance.ResumeJobs(GroupMatcher<JobKey>.GroupEquals(group));
+        }
+        public void PauseJobs(string group)
+        {
+            Instance.PauseJobs(GroupMatcher<JobKey>.GroupEquals(group));
         }
 
 
@@ -85,7 +86,7 @@ namespace HubRoute
             Instance.RescheduleJob(new TriggerKey(jobName, jobGroup), trigger);
         }
 
-        public void AddJob(string jobName, string jobGroup, string cronExpression)
+        public void AddJob(string jobName, string jobGroup, string cronExpression, JobContent jobData)
         {
             var job = JobBuilder.Create<HttpJobs>()
             .WithIdentity(jobName, jobGroup)
@@ -93,9 +94,10 @@ namespace HubRoute
 
             var trigger = (ICronTrigger)TriggerBuilder.Create()
                 .WithIdentity(jobName, jobGroup)
+                .UsingJobData("jobData", new JavaScriptSerializer().Serialize(jobData))
                 .WithCronSchedule(cronExpression)
                 .Build();
-            Instance.RescheduleJob(new TriggerKey(jobName, jobGroup), trigger);
+            Instance.ScheduleJob(job, trigger);
         }
 
     }

@@ -261,6 +261,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonJobs\Common.Jobs.csproj">
+      <Project>{27e7446a-606a-431f-814c-a5d414e7e634}</Project>
+      <Name>Common.Jobs</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HubRoute\HubRoute.csproj">
       <Project>{b602ddf0-bd22-482f-9e70-2f9fcdec2f11}</Project>
       <Name>HubRoute</Name>

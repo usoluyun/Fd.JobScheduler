@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B602DDF0-BD22-482F-9E70-2F9FCDEC2F11}</ProjectGuid>
+    <ProjectGuid>{27E7446A-606A-431F-814C-A5D414E7E634}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HubRoute</RootNamespace>
-    <AssemblyName>HubRoute</AssemblyName>
+    <RootNamespace>Common.Jobs</RootNamespace>
+    <AssemblyName>Common.Jobs</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -31,50 +31,28 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Logging, Version=2.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Common.Logging">
       <HintPath>..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Quartz, Version=2.3.0.18, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Quartz">
       <HintPath>..\packages\Quartz.2.2.4\lib\net40\Quartz.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\Activity.cs" />
-    <Compile Include="Domain\ActivityNode.cs" />
-    <Compile Include="Domain\ActivityStatus.cs" />
-    <Compile Include="Domain\JobData.cs" />
-    <Compile Include="Domain\JobGroupData.cs" />
-    <Compile Include="Domain\NamedObject.cs" />
-    <Compile Include="Domain\TriggerData.cs" />
-    <Compile Include="Domain\TriggerGroupData.cs" />
-    <Compile Include="Domain\TriggerTypes\CronTriggerType.cs" />
-    <Compile Include="Domain\TriggerTypes\SimpleTriggerType.cs" />
-    <Compile Include="Domain\TriggerTypes\TriggerType.cs" />
-    <Compile Include="JobCommand.cs" />
-    <Compile Include="Scheduler.cs" />
+    <Compile Include="HttpJobs.cs" />
+    <Compile Include="JobContent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SchedulerData.cs" />
-    <Compile Include="TriggerTypeExtractor.cs" />
-    <Compile Include="Utils\DateTimeOffsetExtensions.cs" />
+    <Compile Include="Utils\RequestHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CommonJobs\Common.Jobs.csproj">
-      <Project>{27e7446a-606a-431f-814c-a5d414e7e634}</Project>
-      <Name>Common.Jobs</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

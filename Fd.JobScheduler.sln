@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00 Interface", "00 Interfac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Jobs", "CommonJobs\Common.Jobs.csproj", "{27E7446A-606A-431F-814C-A5D414E7E634}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobScheduler.UnitTest", "JobScheduler\JobScheduler.UnitTest.csproj", "{444A9C19-40FA-4D42-9581-02E9F9D2C5AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{27E7446A-606A-431F-814C-A5D414E7E634}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27E7446A-606A-431F-814C-A5D414E7E634}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27E7446A-606A-431F-814C-A5D414E7E634}.Release|Any CPU.Build.0 = Release|Any CPU
+		{444A9C19-40FA-4D42-9581-02E9F9D2C5AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{444A9C19-40FA-4D42-9581-02E9F9D2C5AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{444A9C19-40FA-4D42-9581-02E9F9D2C5AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{444A9C19-40FA-4D42-9581-02E9F9D2C5AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
