@@ -23,7 +23,6 @@ namespace WebManager.Controllers
             else
             {
                 SchedulerInfo = Scheduler.CurrentInstance = new Scheduler("127.0.0.1", 5555);
-                //SchedulerInfo = Scheduler.CurrentInstance = new Scheduler("10.1.200.30", 5555);
             }
             SchedulerModel sm = new SchedulerModel();
             sm.SchedulerInfo = SchedulerInfo;

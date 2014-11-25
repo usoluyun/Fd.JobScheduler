@@ -11,45 +11,52 @@ using Common.Jobs;
 
 namespace WebManager.Controllers
 {
-    public class JobCommandController : ApiController
+    public class JobCommandController : BaseApiController
     {
-        // GET api/jobcommand
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/jobcommand/5
 
         public string PauseTrigger()
         {
-            string name = HttpContext.Current.Request["name"];
-            string group = HttpContext.Current.Request["group"];
-            JobCommand.Current.PauseTrigger(name, group);
+            JobCommand.Current.PauseTrigger(JobName, JobGroup);
             return "success";
         }
 
-
+        public string ResumeTrigger()
+        {
+            JobCommand.Current.ResumeTrigger(JobName, JobGroup);
+            return "success";
+        }
+       
         public string RescheduleJob()
         {
-            string name = HttpContext.Current.Request["name"];
-            string group = HttpContext.Current.Request["group"];
-            string cron = HttpContext.Current.Request["cron"];
+            string cron = System.Web.HttpContext.Current.Request["cron"];
 
-            JobCommand.Current.RescheduleJob(name, group, cron);
+            JobCommand.Current.RescheduleJob(JobName, JobGroup, cron);
             return "success";
         }
 
-
-        public string UnscheduleJob()
+        public string TriggerJob()
         {
-            string name = HttpContext.Current.Request["name"];
-            string group = HttpContext.Current.Request["group"];
-            string cron = HttpContext.Current.Request["cron"];
-            JobContent jd = new JobContent();
-            jd.Url = HttpContext.Current.Request["url"];
+            JobCommand.Current.TriggerJob(JobName, JobGroup);
+            return "success";
+        }
+        public string AddHttpJob()
+        {
+            string cron = System.Web.HttpContext.Current.Request["cron"];
+            HttpJobData jd = new HttpJobData();
+            jd.Url = System.Web.HttpContext.Current.Request["url"];
 
-            JobCommand.Current.AddJob(name, group, cron, jd);
+            JobCommand.Current.AddHttpJob(JobName, JobGroup, cron, jd);
+            return "success";
+        }
+        public string AddConsoleJob()
+        {
+            string cron = System.Web.HttpContext.Current.Request["cron"];
+
+            ConsoleJobData jd = new ConsoleJobData();
+            jd.Path = System.Web.HttpContext.Current.Request["path"];
+            jd.Parameters = System.Web.HttpContext.Current.Request["parameters"];
+
+            JobCommand.Current.AddConsoleJob(JobName, JobGroup, cron, jd);
             return "success";
         }
     }

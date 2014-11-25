@@ -109,39 +109,29 @@
                 </div>
 
             </section>
-        </div>
 
-        <div class="container" style="margin-top: 250px">
-            @foreach (var item in Model.SchedulerInfo.Data.JobGroups)
-            {
-            <article class="cq-job-group">
-                <header class="cq-job-group-header">
-                    @*<span class="status">@item.Status</span>--
-
-                   <section class="actions">
-                        <a href="#" class="pause cq-button flaticon-pause" title="Pause all jobs"></a>
-                        <a href="#" class="resume cq-button flaticon-play disabled" title="Resume all jobs"></a>
-                    </section>*@
-
-                    <h2 class="cq-job-group-header-title name">@item.Name </h2>
-                </header>
-                <section class="content">
-
-                    @foreach (var item1 in item.Jobs)
-                    {
-
-                    <article class="cq-job">
-                        <header class="cq-job-header clearfix">
-                            <div class="status"><span class="cq-activity-status active" title="Status: Active"><span class="cq-activity-status-primary"></span><span class="cq-activity-status-secondary"></span></span></div>
-
-                            <a class="cq-job-header-title loadDetails name" href="#">@item1.GroupName  </a>
-                           @*<a class="cq-job-hide-details hideDetails" href="#" style="display: none;">hide details</a>
+            <div class="container">
+                @foreach (var item in Model.SchedulerInfo.Data.JobGroups)
+                {
+                    <header class="cq-job-group-header">
+                        @*<span class="status">@item.Status</span>--
 
                             <section class="actions">
-                                <a href="#" class="execute cq-button">Execute Now</a>
-                                <a href="#" class="pause cq-button flaticon-pause" title="Pause all triggers"></a>
-                                <a href="#" class="resume cq-button flaticon-play disabled" title="Resume all triggers"></a>
-                            </section>*@
+                                 <a href="#" class="pause cq-button flaticon-pause" title="Pause all jobs"></a>
+                                 <a href="#" class="resume cq-button flaticon-play disabled" title="Resume all jobs"></a>
+                             </section>*@
+
+                        <h2 class="cq-job-group-header-title name">@item.Name </h2>
+                    </header>
+
+                    foreach (var item1 in item.Jobs)
+                    {
+                        <header class="cq-job-header clearfix">
+                            <a class="cq-job-header-title loadDetails name" href="#">@item1.GroupName  </a>
+
+                            <section class="actions">
+                                <button class="btn btn-primary" onclick="alert('xxx')">运行一次</button>
+                            </section>
                         </header>
 
                         <section class="detailsContainer"></section>
@@ -149,6 +139,7 @@
                         <table class="cq-triggers triggers">
                             <thead>
                                 <tr>
+                                    <th>状态</th>
                                     <th>Trigger</th>
                                     <th>Schedule</th>
                                     <th>Start date</th>
@@ -160,62 +151,43 @@
                             <tbody>
                                 @foreach (var trigger in item1.Triggers)
                                 {
-                                <tr>
-                                    <td>
+                                    <tr>
+                                        <td>
+                                            <span class="name">@trigger.Status </span>
+                                        </td>
+                                        <td>
+                                            <span class="name">@trigger.Name </span>
+                                        </td>
+                                        <td class="type">@trigger.TriggerType.CronExpression </td>
+                                        <td class="startDate"><span class="cq-date">@trigger.StartDate </span></td>
+                                        <td class="previousFireDate"><span class="cq-date">@trigger.PreviousFireDate </span></td>
+                                        <td class="nextFireDate"><span class="cq-date">@trigger.NextFireDate </span></td>
+                                        <td class="">
+                                            @if (trigger.Status == HubRoute.Domain.ActivityStatus.Active)
+                                            {
+                                                <button class="btn btn-primary" onclick="job.pauseTrigger('@trigger.Name', '@trigger.GroupName')">暂停</button>
+                                            }
+                                            else
+                                            {
+                                                <button class="btn btn-primary " onclick="job.resumeTrigger('@trigger.Name', '@trigger.GroupName')">启动</button>
+                                            }
+                                            <button class="btn btn-primary" onclick="alert('xxx')">修改</button>
+                                            <button class="btn btn-primary" onclick="alert('xxx')">删除</button>
 
-                                        <span class="status">
-                                            <span class="cq-activity-status active" title="Status: Active">
-                                                @if (trigger.Status == HubRoute.Domain.ActivityStatus.Active)
-                                                { 
-                                                   <span class="cq-activity-status-primary"></span>
-                                                }
-                                                else if (trigger.Status == HubRoute.Domain.ActivityStatus.Paused)
-                                                {
-                                                    <span class="cq-activity-status-primary" style="background:#E5D45B;"></span>
-                                                }
-                                            </span>
-                                        </span>
-                                        <span class="name">@trigger.Name </span>
-                                    </td>
-                                    <td class="type">@trigger.TriggerType.CronExpression </td>
-                                    <td class="startDate"><span class="cq-date">@trigger.StartDate </span></td>
-                                    <td class="previousFireDate"><span class="cq-date">@trigger.PreviousFireDate </span></td>
-                                    <td class="nextFireDate"><span class="cq-date">@trigger.NextFireDate </span></td>
-                                    <td class="">
-                                        <section class="actions">
-                                            <a href="#" id="TriggerPause" onclick="job.pauseTrigger('@trigger.Name','@trigger.GroupName')" class="pause cq-button flaticon-pause"></a>
-                                            <a href="#" id="Triggerresume" onclick="job.pauseTrigger('@trigger.Name','@trigger.GroupName')" class="resume cq-button flaticon-play disabled"></a>
-                                        </section>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
 
-                                } 
+                                }
                             </tbody>
                         </table>
-                    </article>
-                    } 
-                </section>
-            </article>
-            } 
+                    }
+
+                }
+            </div>
         </div>
 
-        <footer id="mainFooter" class="cq-main-footer">
-           @*<div class="cq-footer-wrapper">
-                <div class="container">
-                    <div class="pull-left">
-                        <div class="cq-version-container">CrystalQuartz Panel <span id="selfVersion" class="cq-version">v1.0.0.0</span> </div>
-                        <div class="cq-version-container visible-lg-block">Quartz.NET <span id="quartzVersion" class="cq-version">v2.2.4.400</span> </div>
-                        <div class="cq-version-container visible-lg-block">.NET <span id="dotNetVersion" class="cq-version">v4.0</span></div>
-                    </div>
-
-                    <div class="pull-right">
-                        <span id="autoUpdateMessage" class="">next update at 18:00:01 GMT+0800 (中国标准时间)</span>
-                    </div>
-                </div>
-            </div>*@
-        </footer>
+        <footer id="mainFooter" class="cq-main-footer"></footer>
     </div>
-
     <script src="/Scripts/jquery-1.11.1.min.js"></script>
     <script src="~/Scripts/Jobs.js"></script>
 </body>

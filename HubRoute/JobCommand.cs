@@ -27,6 +27,8 @@ namespace HubRoute
 
         private IScheduler Instance = Scheduler.CurrentInstance.Instance;
 
+
+
         public void PauseTrigger(string name, string group)
         {
             Instance.PauseTrigger(new TriggerKey(name, group));
@@ -86,7 +88,7 @@ namespace HubRoute
             Instance.RescheduleJob(new TriggerKey(jobName, jobGroup), trigger);
         }
 
-        public void AddJob(string jobName, string jobGroup, string cronExpression, JobContent jobData)
+        public void AddHttpJob(string jobName, string jobGroup, string cronExpression, HttpJobData jobData)
         {
             var job = JobBuilder.Create<HttpJobs>()
             .WithIdentity(jobName, jobGroup)
@@ -98,6 +100,25 @@ namespace HubRoute
                 .WithCronSchedule(cronExpression)
                 .Build();
             Instance.ScheduleJob(job, trigger);
+        }
+        public void AddConsoleJob(string jobName, string jobGroup, string cronExpression, ConsoleJobData jobData)
+        {
+            var job = JobBuilder.Create<ConsoleJob>()
+            .WithIdentity(jobName, jobGroup)
+            .Build();
+
+            var trigger = (ICronTrigger)TriggerBuilder.Create()
+                .WithIdentity(jobName, jobGroup)
+                .UsingJobData("jobData", new JavaScriptSerializer().Serialize(jobData))
+                .WithCronSchedule(cronExpression)
+                .Build();
+            Instance.ScheduleJob(job, trigger);
+        }
+
+
+        public void TriggerJob(string name, string group)
+        {
+            Instance.TriggerJob(new JobKey(name, group));
         }
 
     }

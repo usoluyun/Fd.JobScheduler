@@ -15,7 +15,7 @@ namespace Common.Jobs
 
             string content = dataMap.GetString("jobData");
 
-            var jd = new JavaScriptSerializer().Deserialize<JobContent>(content);
+            var jd = new JavaScriptSerializer().Deserialize<HttpJobData>(content);
 
             var result = RequestHelper.Post(jd.Url);
 
