@@ -43,11 +43,11 @@ namespace HubRoute
         {
             Instance.PauseTriggers(GroupMatcher<TriggerKey>.GroupEquals(group));
         }
+
         public void ResumeTriggers(string group)
         {
             Instance.ResumeTriggers(GroupMatcher<TriggerKey>.GroupEquals(group));
         }
-
 
         public void PauseJob(string name, string group)
         {
@@ -121,5 +121,19 @@ namespace HubRoute
             Instance.TriggerJob(new JobKey(name, group));
         }
 
+
+        public void AddTrigger(string name, string group, string cron, IJobData jobData)
+        {
+            var job= Instance.GetJobDetail(new JobKey(name, group));
+
+
+            var trigger = (ICronTrigger)TriggerBuilder.Create()
+                .WithIdentity(name, group)
+                .UsingJobData("jobData", new JavaScriptSerializer().Serialize(jobData))
+                .WithCronSchedule(cron)
+                .Build();
+
+            Instance.ScheduleJob(job, trigger);
+        }
     }
 }

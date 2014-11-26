@@ -1,7 +1,9 @@
 ﻿using Quartz;
+using SchedulerService.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +19,7 @@ namespace SchedulerService
 
             // set thread pool info
             properties["quartz.threadPool.type"] = "Quartz.Simpl.SimpleThreadPool, Quartz";
-            properties["quartz.threadPool.threadCount"] = "5";
+            properties["quartz.threadPool.threadCount"] = "10";
             properties["quartz.threadPool.threadPriority"] = "Normal";
 
             // set remoting expoter
@@ -27,17 +29,20 @@ namespace SchedulerService
             properties["quartz.scheduler.exporter.channelType"] = "tcp";
             properties["quartz.scheduler.exporter.channelName"] = "httpQuartz";
 
-            //cluster
-            //properties["quartz.scheduler.instanceId"] = "AUTO";
-            //properties["quartz.jobStore.useProperties"] = "true";
-            //properties["quartz.jobStore.clustered"] = "true";
-            //properties["quartz.jobStore.misfireThreshold"] = "60000";
-            //properties["quartz.jobStore.type"] = "Quartz.Impl.AdoJobStore.JobStoreTX, Quartz";
-            //properties["quartz.jobStore.tablePrefix"] = "QRTZ_";
-            //properties["quartz.jobStore.driverDelegateType"] = "Quartz.Impl.AdoJobStore.SqlServerDelegate, Quartz";
-            //properties["quartz.jobStore.dataSource"] = "myDS";
-            //properties["quartz.dataSource.myDS.connectionString"] = @"Data Source=10.1.249.44;Initial Catalog=CheckInTaskScheduler;User ID=sa;Password=hanting@2010";
-            //properties["quartz.dataSource.myDS.provider"] = "SqlServer-20";
+
+            properties["quartz.jobStore.misfireThreshold"] = "5000";
+
+            ////cluster
+            properties["quartz.scheduler.instanceId"] = "AUTO";
+            properties["quartz.jobStore.useProperties"] = "true";
+            properties["quartz.jobStore.clustered"] = "true";
+
+            properties["quartz.jobStore.type"] = "Quartz.Impl.AdoJobStore.JobStoreTX, Quartz";
+            properties["quartz.jobStore.tablePrefix"] = "QRTZ_";
+            properties["quartz.jobStore.driverDelegateType"] = "Quartz.Impl.AdoJobStore.SqlServerDelegate, Quartz";
+            properties["quartz.jobStore.dataSource"] = "myDS";
+            properties["quartz.dataSource.myDS.connectionString"] = ConfigHelper.GetAppConfig("quartzdb");
+            properties["quartz.dataSource.myDS.provider"] = "SqlServer-20";
 
             ////plugin
             //properties["quartz.plugin.myPlugin.type"] = "TaskSchedulerManager.Plugin.History.LoggingTriggerHistoryPlugin,TaskSchedulerManager";
@@ -46,14 +51,13 @@ namespace SchedulerService
         }
         public static void Test(IScheduler scheduler)
         {
-            var job = JobBuilder.Create<HelloJob>()
-               .WithIdentity("testJob", "testJobs")
-               .Build();
-            var trigger = TriggerBuilder.Create()
-                .WithIdentity("testTrigger", "testTriggers")
-                .WithCronSchedule("0/2 * * ? * *")
-                .Build();
-            scheduler.ScheduleJob(job, trigger);
+            //var job = JobBuilder.Create<HelloJob>()
+            //   .WithIdentity("testJob", "testJobs")
+            //   .Build();
+            //var trigger = TriggerBuilder.Create()
+            //    .WithIdentity("testTrigger", "testTriggers")
+            //    .WithCronSchedule("0/10 * * ? * *")
+            //    .Build();
         }
     }
 }

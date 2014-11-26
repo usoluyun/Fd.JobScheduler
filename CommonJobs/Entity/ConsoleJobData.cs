@@ -7,10 +7,10 @@ using System.Text;
 
 namespace Common.Jobs
 {
-    public class ConsoleJobData
+    public class ConsoleJobData : IJobData
     {
         public string Path { get; set; }
 
-        public string Parameters { get; set; }
+       
     }
 }

@@ -12,6 +12,9 @@
     <link href='/Styles/bootstrap.css' rel='stylesheet' type='text/css' />
     <link href='/Styles/main.css' rel='stylesheet' type='text/css' />
     <link href='/Styles/Fonts/flaticon.css' rel='stylesheet' type='text/css' />
+
+    <link href="~/Pluglin/layer/skin/layer.css" rel="stylesheet" />
+    <link href="~/Pluglin/layer/skin/layer.ext.css" rel="stylesheet" />
 </head>
 <body>
     <div id="application">
@@ -109,7 +112,11 @@
                 </div>
 
             </section>
+            <header class="cq-job-header clearfix">
+                <a class="cq-job-header-title loadDetails name" href="#"></a>
 
+                <button class="btn btn-primary" onclick="jbox.addHttpJob()">添加http作业</button>
+            </header>
             <div class="container">
                 @foreach (var item in Model.SchedulerInfo.Data.JobGroups)
                 {
@@ -130,7 +137,7 @@
                             <a class="cq-job-header-title loadDetails name" href="#">@item1.GroupName  </a>
 
                             <section class="actions">
-                                <button class="btn btn-primary" onclick="alert('xxx')">运行一次</button>
+                                <button class="btn btn-primary" onclick="job.triggerJob('@item1.Name', '@item1.GroupName')">运行一次</button>
                             </section>
                         </header>
 
@@ -171,8 +178,8 @@
                                             {
                                                 <button class="btn btn-primary " onclick="job.resumeTrigger('@trigger.Name', '@trigger.GroupName')">启动</button>
                                             }
-                                            <button class="btn btn-primary" onclick="alert('xxx')">修改</button>
-                                            <button class="btn btn-primary" onclick="alert('xxx')">删除</button>
+                                            <button class="btn btn-primary" onclick="jbox.cronUpdate('@trigger.Name', '@trigger.GroupName','@trigger.TriggerType.CronExpression')">修改</button>
+                                            @*<button class="btn btn-primary" onclick="alert('xxx')">删除</button>*@
 
                                         </td>
                                     </tr>
@@ -187,8 +194,30 @@
         </div>
 
         <footer id="mainFooter" class="cq-main-footer"></footer>
+
+        <div id="CronModal"><input id="triggerCron" value="" /></div>
+
+        <div id="loginForm">
+
+            <label>name：</label>
+            <input type="text" id="jobname" name="login_name" placeholder="请输入作业名" autocomplete="off"> <br />
+
+            <label>group：</label>
+            <input type="text" id="groupname" name="login_pass"  placeholder="分组名称"><br />
+
+            <label>Cron：</label>
+            <input type="text" id="triggercron" name="login_pass" placeholder="Cron"><br />
+
+            <label>URL：</label>
+            <input type="text" id="joburl" name="login_pass" placeholder="URL"><br />
+
+            <br />
+            <input type="button" style="margin-left:50px;" value="添加">
+        </div>
     </div>
     <script src="/Scripts/jquery-1.11.1.min.js"></script>
+    <script src="~/Pluglin/layer/layer.min.js"></script>
+    <script src="~/Pluglin/layer/extend/layer.ext.js"></script>
     <script src="~/Scripts/Jobs.js"></script>
 </body>
 </html>

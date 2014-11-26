@@ -6,7 +6,7 @@ using System.Text;
 namespace Common.Jobs
 {
 
-    public class HttpJobData
+    public class HttpJobData : IJobData
     {
         public string Url { get; set; }
     }

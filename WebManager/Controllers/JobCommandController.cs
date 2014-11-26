@@ -13,7 +13,6 @@ namespace WebManager.Controllers
 {
     public class JobCommandController : BaseApiController
     {
-
         public string PauseTrigger()
         {
             JobCommand.Current.PauseTrigger(JobName, JobGroup);

@@ -144,6 +144,18 @@
     </Compile>
     <Compile Include="Models\SchedulerModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Pluglin\layer\extend\layer.ext.js" />
+    <Content Include="Pluglin\layer\layer.min.js" />
+    <Content Include="Pluglin\layer\skin\default\icon_ext.png" />
+    <Content Include="Pluglin\layer\skin\default\textbg.png" />
+    <Content Include="Pluglin\layer\skin\default\xubox_ico0.png" />
+    <Content Include="Pluglin\layer\skin\default\xubox_loading0.gif" />
+    <Content Include="Pluglin\layer\skin\default\xubox_loading1.gif" />
+    <Content Include="Pluglin\layer\skin\default\xubox_loading2.gif" />
+    <Content Include="Pluglin\layer\skin\default\xubox_loading3.gif" />
+    <Content Include="Pluglin\layer\skin\default\xubox_title0.png" />
+    <Content Include="Pluglin\layer\skin\layer.css" />
+    <Content Include="Pluglin\layer\skin\layer.ext.css" />
     <Content Include="Scripts\Jobs.js" />
   </ItemGroup>
   <ItemGroup>
