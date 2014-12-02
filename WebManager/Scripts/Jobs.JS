@@ -32,8 +32,13 @@ var job = {
             location.reload()
         })
     },
-    addHttpJob: function (name, group) {
-        $.post(servive.addHttpJob, { name: name, group: group }, function (data) {
+    addHttpJob: function () {
+        var jobname = $("#httpjobname").val();
+        var groupname = $("#httpgroupname").val();
+        var cron = $("#httptriggercron").val();
+        var url = $("#httpjoburl").val();
+
+        $.post(servive.addHttpJob, { name: jobname, group: groupname, cron: cron, url: url }, function (data) {
             alert(data);
             location.reload()
         })

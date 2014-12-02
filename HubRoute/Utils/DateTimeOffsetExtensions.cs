@@ -14,9 +14,8 @@ namespace HubRoute.Utils
         {
             if (offset.HasValue)
             {
-                return offset.Value.DateTime;
+                return offset.Value.DateTime.ToLocalTime();
             }
-
             return null;
         }
     }

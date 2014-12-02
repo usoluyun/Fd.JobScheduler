@@ -169,8 +169,8 @@ namespace HubRoute
              return new TriggerData(trigger.Key.Name, GetTriggerStatus(trigger, scheduler))
              {
                  GroupName = trigger.Key.Group,
-                 StartDate = trigger.StartTimeUtc.DateTime,
-                 EndDate = trigger.EndTimeUtc.ToDateTime(),
+                 StartDate = trigger.StartTimeUtc.DateTime.ToLocalTime(),
+                 EndDate = trigger.StartTimeUtc.DateTime.ToLocalTime(),
                  NextFireDate = trigger.GetNextFireTimeUtc().ToDateTime(),
                  PreviousFireDate = trigger.GetPreviousFireTimeUtc().ToDateTime(),
                  TriggerType = TriggerTypeExtractor.GetFor(trigger)
@@ -194,6 +194,45 @@ namespace HubRoute
              }
          }
 
-         
+         public static string ToGMTFormat(DateTime dt)
+         {
+             return dt.ToString("r") + dt.ToString("zzz").Replace(":", "");
+         }
+
+         /// <summary>   
+         /// GMT时间转成本地时间   
+         /// </summary>   
+         /// <param name="gmt">字符串形式的GMT时间</param>   
+         /// <returns></returns>   
+         public static DateTime GMT2Local(string gmt)
+         {
+             DateTime dt = DateTime.MinValue;
+             try
+             {
+                 string pattern = "";
+                 if (gmt.IndexOf("+0") != -1)
+                 {
+                     gmt = gmt.Replace("GMT", "");
+                     pattern = "ddd, dd MMM yyyy HH':'mm':'ss zzz";
+                 }
+                 if (gmt.ToUpper().IndexOf("GMT") != -1)
+                 {
+                     pattern = "ddd, dd MMM yyyy HH':'mm':'ss 'GMT'";
+                 }
+                 if (pattern != "")
+                 {
+                     dt = DateTime.ParseExact(gmt, pattern, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AdjustToUniversal);
+                     dt = dt.ToLocalTime();
+                 }
+                 else
+                 {
+                     dt = Convert.ToDateTime(gmt);
+                 }
+             }
+             catch
+             {
+             }
+             return dt;
+         } 
     }
 }

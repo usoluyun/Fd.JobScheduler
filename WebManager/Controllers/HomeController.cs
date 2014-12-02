@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebManager.Models;
-
+using System.Configuration;
 namespace WebManager.Controllers
 {
     public class HomeController : Controller
@@ -22,16 +22,28 @@ namespace WebManager.Controllers
             }
             else
             {
-                SchedulerInfo = Scheduler.CurrentInstance = new Scheduler("127.0.0.1", 5555);
+               var host= ConfigurationManager.AppSettings["host"];
+               var port = ConfigurationManager.AppSettings["port"];
+               SchedulerInfo = Scheduler.CurrentInstance = new Scheduler(host, Convert.ToInt32(port));
             }
             SchedulerModel sm = new SchedulerModel();
             sm.SchedulerInfo = SchedulerInfo;
             return View(sm);
         }
+        
+         //<header class="cq-job-header clearfix">
+         //       <a class="cq-job-header-title loadDetails name" href="#"></a>
 
+         //       <button class="btn btn-primary" onclick="jbox.addHttpJob()">添加http作业</button>
+         //   </header>
         //
         // GET: /Home/Details/5
 
+        public ActionResult JobDetail()
+        {
+
+            return View();
+        }
         public ActionResult Details(int id)
         {
             return View();

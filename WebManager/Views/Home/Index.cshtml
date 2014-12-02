@@ -15,33 +15,31 @@
 
     <link href="~/Pluglin/layer/skin/layer.css" rel="stylesheet" />
     <link href="~/Pluglin/layer/skin/layer.ext.css" rel="stylesheet" />
+    <link href="~/Styles/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
     <div id="application">
-        <header id="mainHeader" class="cq-main-header">
-            <div class="cq-main-header-wrapper">
-                <div class="container">
-                    <div class="row">
-                        <div class="cq-header-item cq-scheduler col-xs-9 col-md-5">
-                            <div id="schedulerStatus" class="cq-scheduler-status" title="Status: undefined"></div>
-                            <h1 id="schedulerName" class="cq-scheduler-name"></h1>
-                        </div>
-
-                        <div id="commandIndicator" class="col-xs-3 col-md-2 cq-header-item">
-                            <section class="cq-busy" style="display: none;">
-                                <div class="cq-busy-image">
-                                    <img src="/Images/loading.gif">
-                                </div>
-                                <div id="currentCommand" class="cq-current-command">Loading scheduler data</div>
-                            </section>
-                        </div>
-
-                        <div class="col-xs-3 col-md-5 cq-header-item visible-md-block visible-lg-block">
-                        </div>
-                    </div>
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand active" href="#">作业调度平台</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class=""><a href="#">添加作业</a></li>
+                        <li class=""><a href="#">配置中心</a></li>
+                        <li class=""><a href="#">日志记录</a></li>
+                        <li class=""><a href="#">报警监控</a></li>
+                    </ul>
                 </div>
             </div>
-        </header>
+        </div>
 
         <div class="cq-main-content">
             <section id="schedulerPropertiesContainer" class="cq-scheduler-properties">
@@ -112,11 +110,7 @@
                 </div>
 
             </section>
-            <header class="cq-job-header clearfix">
-                <a class="cq-job-header-title loadDetails name" href="#"></a>
-
-                <button class="btn btn-primary" onclick="jbox.addHttpJob()">添加http作业</button>
-            </header>
+           
             <div class="container">
                 @foreach (var item in Model.SchedulerInfo.Data.JobGroups)
                 {
@@ -134,7 +128,7 @@
                     foreach (var item1 in item.Jobs)
                     {
                         <header class="cq-job-header clearfix">
-                            <a class="cq-job-header-title loadDetails name" href="#">@item1.GroupName  </a>
+                            <a class="cq-job-header-title loadDetails name" href="#">@item1.Name  </a>
 
                             <section class="actions">
                                 <button class="btn btn-primary" onclick="job.triggerJob('@item1.Name', '@item1.GroupName')">运行一次</button>
@@ -195,25 +189,26 @@
 
         <footer id="mainFooter" class="cq-main-footer"></footer>
 
+
         <div id="CronModal"><input id="triggerCron" value="" /></div>
 
-        <div id="loginForm">
+        @*<div id="loginForm">
 
             <label>name：</label>
-            <input type="text" id="jobname" name="login_name" placeholder="请输入作业名" autocomplete="off"> <br />
+            <input type="text" id="httpjobname" name="login_name" placeholder="请输入作业名" autocomplete="off"> <br />
 
             <label>group：</label>
-            <input type="text" id="groupname" name="login_pass"  placeholder="分组名称"><br />
+            <input type="text" id="httpgroupname" name="login_pass" placeholder="分组名称"><br />
 
             <label>Cron：</label>
-            <input type="text" id="triggercron" name="login_pass" placeholder="Cron"><br />
+            <input type="text" id="httptriggercron" name="login_pass" placeholder="Cron"><br />
 
             <label>URL：</label>
-            <input type="text" id="joburl" name="login_pass" placeholder="URL"><br />
+            <input type="text" id="httpjoburl" name="login_pass" placeholder="URL"><br />
 
             <br />
-            <input type="button" style="margin-left:50px;" value="添加">
-        </div>
+            <input type="button" style="margin-left:50px;"  onclick="job.addHttpJob()" value="添加">
+        </div>*@
     </div>
     <script src="/Scripts/jquery-1.11.1.min.js"></script>
     <script src="~/Pluglin/layer/layer.min.js"></script>
