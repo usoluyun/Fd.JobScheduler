@@ -9,5 +9,6 @@ namespace Common.Jobs
     public class HttpJobData : IJobData
     {
         public string Url { get; set; }
+        public string Heads { get; set; }
     }
 }

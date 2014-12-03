@@ -33,14 +33,14 @@ var job = {
         })
     },
     addHttpJob: function () {
-        var jobname = $("#httpjobname").val();
-        var groupname = $("#httpgroupname").val();
-        var cron = $("#httptriggercron").val();
-        var url = $("#httpjoburl").val();
+        //var jobname = $("#httpjobname").val();
+        //var groupname = $("#httpgroupname").val();
+        //var cron = $("#httptriggercron").val();
+        //var url = $("#httpjoburl").val();
 
-        $.post(servive.addHttpJob, { name: jobname, group: groupname, cron: cron, url: url }, function (data) {
+        $.post(servive.addHttpJob, $(addjob).serialize(), function (data) {
             alert(data);
-            location.reload()
+            location.href="/home/index"
         })
 
     }

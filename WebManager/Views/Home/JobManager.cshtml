@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "JobManager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>JobManager</h2>
+<div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
+    <form id="addjob" class="form-horizontal">
+        <fieldset>
+            <legend>添加作业</legend>
+            <div class="form-group">
+                <label for="inputEmail" class="col-lg-2 control-label">分组名称</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="group"   >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword" class="col-lg-2 control-label">作业名</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inpuAppkey" class="col-lg-2 control-label">TargetUrl</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="url">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inpuAppkey" class="col-lg-2 control-label">Cron表达式</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="cron">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-2">
+                    <button type="button"  onclick="job.addHttpJob()" class="btn btn-primary">提交</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<script src="~/Scripts/Jobs.js"></script>

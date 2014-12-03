@@ -39,9 +39,8 @@ namespace WebManager.Controllers
         //
         // GET: /Home/Details/5
 
-        public ActionResult JobDetail()
+        public ActionResult JobManager()
         {
-
             return View();
         }
         public ActionResult Details(int id)

@@ -266,6 +266,7 @@
     <Content Include="Styles\Fonts\flaticon.eot" />
     <Content Include="Styles\Fonts\flaticon.ttf" />
     <Content Include="Styles\Fonts\flaticon.woff" />
+    <Content Include="Views\Home\JobManager.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

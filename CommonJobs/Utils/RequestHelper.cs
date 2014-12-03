@@ -19,16 +19,16 @@ namespace Common.Jobs.Utils
         {
            return MakeRequest(contentType, HttpVerb.Post, timeout, url, null, null);
         }
-        public static void Post(string url, string contentType = null, int timeout = 30, IEnumerable<KeyValuePair<string, string>> parameters = null, IEnumerable<KeyValuePair<string, string>> heads = null)
+        public static void Post(string url, string contentType = null, int timeout = 30, string parameters="", IEnumerable<KeyValuePair<string, string>> heads = null)
         {
             MakeRequest(contentType, HttpVerb.Post, timeout, url, parameters, heads);
         }
 
         #endregion
-        private static string MakeRequest(string contentType, HttpVerb method, int Timeout, string url, IEnumerable<KeyValuePair<string, string>> parameters, IEnumerable<KeyValuePair<string, string>> heads)
+        private static string MakeRequest(string contentType, HttpVerb method, int Timeout, string url, string parameters, IEnumerable<KeyValuePair<string, string>> heads)
         {
 
-            byte[] bData = BuildParameters(parameters);
+            byte[] bData = Encoding.UTF8.GetBytes(parameters); ;
 
             if (string.IsNullOrWhiteSpace(url))
                 throw new ArgumentException("url is empty");
